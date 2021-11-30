@@ -71,8 +71,25 @@ extesions VSCODE **prettier** and **beautify**
 ```
 // package.json
 {
-    ...
-    "style": "prettier --check '**/{src,tests,e2e}/**/*.{*.css,ts}'",
-    "style:fix": "prettier --write '**/{src,tests,e2e}/**/*.{*css,ts}' && js-beautify '**/src/**/*.html'",
+    scripts: {
+        ...
+        "style": "prettier --check '**/{src,tests,e2e}/**/*.{*.css,ts}'",
+        "style:fix": "prettier --write '**/{src,tests,e2e}/**/*.{*css,ts}' && js-beautify '**/src/**/*.html'",
+    }
+}
+```
+
+2. Configure Test Unit
+
+configure code coverage and debug
+
+```
+// package.json
+{
+    scripts: {
+        ...
+        "test:debug": "npm test -- --source-map",
+        "test:coverage": "npm test -- --code-coverage",
+    }
 }
 ```
