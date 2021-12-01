@@ -25,3 +25,97 @@ Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To u
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+## Extensions (Plugins) for Angular Development
+
+- Angular Language Service
+- Angular Snippets (John Papa)
+- TSLint (Microsoft)
+- ESLint (Microsoft)
+- Nx Console (nrwl)
+
+## Configuration Envorinment
+
+1. Style and Style Fix
+
+extesions VSCODE **prettier** and **beautify**
+
+`npm install --save-dev prettier js-beautify`
+
+```
+// .prettierrc
+{
+  "tabWidth": 2,
+  "useTabs": false,
+  "printWidth": 90,
+  "semi": false,
+  "singleQuote": true,
+  "trailingComma": "es5",
+}
+```
+
+```
+//.jsbeautifyrc
+{
+  "indent_size": 2,
+  "wrap_line_length": 90,
+  "language": {
+    "html": [
+      "html"
+    ]
+  },
+  "end_with_newline": true
+}
+```
+
+```
+// package.json
+{
+    scripts: {
+        ...
+        "style": "prettier --check '**/{src,tests,e2e}/**/*.{*.css,ts}'",
+        "style:fix": "prettier --write '**/{src,tests,e2e}/**/*.{*css,ts}' && js-beautify '**/src/**/*.html'",
+    }
+}
+```
+
+2. Configure Test Unit
+
+configure code coverage and debug
+
+```
+// package.json
+{
+    scripts: {
+        ...
+        "test:debug": "npm test -- --source-map",
+        "test:coverage": "npm test -- --code-coverage",
+    }
+}
+```
+
+3. Configute ESLint
+
+```
+ng add @angular-eslint/schematics
+```
+
+4. Configure Cypress
+
+```
+ng add @cypress/schematic
+```
+
+To run cypress we have to start the local Angular application on `http://localhost:4200` as well and in parellel start the cypress runner to reach the site under where it is living
+
+We can do this by installing a small `http-server` and run it in parellel to either the dist build (`cypress:run`) or the dev build (`cypress:open`). To run commands in parallel we can install the package concurrently. Now we can modify the commands as below:
+
+`npm install --save-dev http-server concurrently`
+
+`package.json`
+
+```
+"cypress:open": "concurrently 'npm start' 'cypress open'",
+"cypress:run": "npm run build && concurrently 'npm run serve:dist' 'cypress run'",
+"serve:dist": "http-server ./dist/{name project} -a localhost -p 4200 -c-1"
+```
