@@ -99,3 +99,23 @@ configure code coverage and debug
 ```
 ng add @angular-eslint/schematics
 ```
+
+4. Configure Cypress
+
+```
+ng add @cypress/schematic
+```
+
+To run cypress we have to start the local Angular application on `http://localhost:4200` as well and in parellel start the cypress runner to reach the site under where it is living
+
+We can do this by installing a small `http-server` and run it in parellel to either the dist build (`cypress:run`) or the dev build (`cypress:open`). To run commands in parallel we can install the package concurrently. Now we can modify the commands as below:
+
+`npm install --save-dev http-server concurrently`
+
+`package.json`
+
+```
+"cypress:open": "concurrently 'npm start' 'cypress open'",
+"cypress:run": "npm run build && concurrently 'npm run serve:dist' 'cypress run'",
+"serve:dist": "http-server ./dist/{name project} -a localhost -p 4200 -c-1"
+```
