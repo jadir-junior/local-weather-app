@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
 
 import { CurrentWeatherComponent } from './current-weather.component'
@@ -10,6 +11,7 @@ describe('CurrentWeatherComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CurrentWeatherComponent],
+      imports: [HttpClientModule],
     }).compileComponents()
   })
 
@@ -20,7 +22,7 @@ describe('CurrentWeatherComponent', () => {
     component.current = {
       city: 'Bethesda',
       country: 'US',
-      date: new Date('2021-12-6'),
+      date: 1638759600000,
       image: 'assets/img/sunny.svg',
       temperature: 72.6,
       description: 'sunny',
