@@ -31,7 +31,7 @@ describe('CurrentWeatherComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CurrentWeatherComponent)
     component = fixture.componentInstance
-    localWeatherElement = fixture.nativeElement
+    localWeatherElement = fixture.debugElement.nativeElement
   })
 
   it('should create', () => {
