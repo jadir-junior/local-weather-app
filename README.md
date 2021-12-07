@@ -120,6 +120,101 @@ We can do this by installing a small `http-server` and run it in parellel to eit
 "serve:dist": "http-server ./dist/{name project} -a localhost -p 4200 -c-1"
 ```
 
-# Testing ci
+# CI with Github Actions
 
-## Testing CI Cache
+### Creating GitHub Actions
+
+Create the folders and file on root aplication
+
+folder: `.github/workflows` and file: `{{name}}.yml` example: `ci.yml`
+
+### Name of workflow
+
+`name: Angular Github CI`
+
+### Trigger on Pull Request
+
+Let's trigger the job whenever `pull request` branch got new push
+
+```
+on: [pull_request]
+```
+
+### Node Version (on variables)
+
+```
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+  strategy:
+    matrix:
+      node-version: [14.x]
+```
+
+### Checkout source code
+
+Let's checkout the code first.
+
+```
+steps:
+  - name: Checkout Repository
+    uses: actions/checkout@v2
+```
+
+### Setup Node Environment
+
+```
+  - name: Setup Node
+    uses: actions/setup-node@v1
+    with:
+      node-version: ${{ matrix.node-version }}
+```
+
+### Use Github cache
+
+```
+  - name: Cache Node modules
+    uses: actions/cache@v2
+    env:
+      cache-name: cache-node-modules
+    with:
+      path: node_modules
+      key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+      restore-keys: |
+        ${{ runner.os }}-build-${{ env.cache-name }}-
+        ${{ runner.os }}-build-
+        ${{ runner.os }}
+```
+
+### Install Dependencies
+
+Next we must install node packages conditionally.
+obs: `npm ci` is better on ci envoriment otherwise `npm install`
+
+```
+  - name: Install dependencies
+    if: steps.cache-nodemodules.outputs.cache-hit != 'true'
+    run: npm ci
+```
+
+### Unit testing (Jasmine + Karma)
+
+Let1s run test in production mode, we need to make sure while running Test:
+
+- we are using **chrome headless broweser**
+- Generating **code coverage**
+- Ignoring **source map**
+- make sure not in **watch mode**
+
+```
+// package.json
+scripts: {
+  "test:ci": "ng test --browsers ChromeHeadless --code-coverage --watch=false"
+}
+```
+
+```
+  - name: Unit Testing (Jasmine + Karma)
+    run: npm run test:ci
+```
