@@ -18,7 +18,9 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "cypress:open": "concurrently 'npm start' 'cypress open'",
-    "cypress:run": "npm run build && concurrently 'npm run serve:dist' 'cypress run'"
+    "cypress:run": "npm run build && concurrently 'npm run serve:dist' 'cypress run'",
+    "prenow:publish": "npm run build:prod",
+    "now:publish": "now --platform-version 2 dist/local-weather-app"
   },
   "dependencies": {
     "@angular/animations": "~13.0.0",
