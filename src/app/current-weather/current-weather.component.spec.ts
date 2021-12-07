@@ -1,69 +1,74 @@
-import { HttpClientModule } from '@angular/common/http'
+import { DebugElement } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { By } from '@angular/platform-browser'
+import { injectSpy } from 'angular-unit-test-helper'
 import { of } from 'rxjs'
 import { WeatherService } from '../weather/weather.service'
+import { fakeWeather } from '../weather/weather.service.fake'
 
 import { CurrentWeatherComponent } from './current-weather.component'
 
 describe('CurrentWeatherComponent', () => {
   let component: CurrentWeatherComponent
   let fixture: ComponentFixture<CurrentWeatherComponent>
-  let localWeatherElement: HTMLElement
-  let weatherService: WeatherService
-  let current = {
-    city: 'Bethesda',
-    country: 'US',
-    date: 1638759600000,
-    image: 'assets/img/sunny.svg',
-    temperature: 72.6,
-    description: 'sunny',
-  }
+  let weatherServiceMock: jasmine.SpyObj<WeatherService>
+  let compiled: HTMLElement
 
   beforeEach(async () => {
+    const weatherServiceSpy = jasmine.createSpyObj('WeatherService', [
+      'getCurrentWeather',
+    ])
+
     await TestBed.configureTestingModule({
       declarations: [CurrentWeatherComponent],
-      imports: [HttpClientModule],
+      imports: [],
+      providers: [{ provide: WeatherService, useValue: weatherServiceSpy }],
     }).compileComponents()
 
-    weatherService = TestBed.inject(WeatherService)
+    weatherServiceMock = injectSpy(WeatherService)
   })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CurrentWeatherComponent)
     component = fixture.componentInstance
-    localWeatherElement = fixture.debugElement.nativeElement
+
+    compiled = fixture.debugElement.nativeElement
   })
 
   it('should create', () => {
+    weatherServiceMock.getCurrentWeather.and.returnValue(of())
+
     fixture.detectChanges()
+
     expect(component).toBeTruthy()
   })
 
-  it('should render message "no data" if current is null or undefined', () => {
+  it('should get currentWeather from weatherService', () => {
+    weatherServiceMock.getCurrentWeather.and.returnValue(of())
+
     fixture.detectChanges()
 
-    expect(localWeatherElement.textContent).toContain('no data')
+    expect(weatherServiceMock.getCurrentWeather).toHaveBeenCalledTimes(1)
   })
 
-  it('should render local weather component', () => {
-    spyOn(weatherService, 'getCurrentWeather').and.returnValue(of(current))
+  it('should eagerly load currentWeather in Bethesda from weatherService', () => {
+    weatherServiceMock.getCurrentWeather.and.returnValue(of(fakeWeather))
+
     fixture.detectChanges()
 
-    expect(localWeatherElement.textContent).toContain('Bethesda, US')
-    expect(localWeatherElement.textContent).toContain('sunny')
-  })
+    // Assert
+    expect(component.current).toBeDefined()
+    expect(component.current?.city).toEqual('Bethesda')
+    expect(component.current?.temperature).toEqual(280.32)
+    // Assert DOM
+    const debugEl: DebugElement = fixture.debugElement
+    const debugElements: DebugElement[] = debugEl.queryAll(By.css('span'))
+    const titleEl: HTMLElement = debugElements[0].nativeElement
+    const dateEl: HTMLElement = debugElements[1].nativeElement
+    const temperatureEl: HTMLElement = debugElements[2].nativeElement
 
-  it('should render a date with fullDate', () => {
-    spyOn(weatherService, 'getCurrentWeather').and.returnValue(of(current))
-    fixture.detectChanges()
-
-    expect(localWeatherElement.textContent).toContain('Monday, December 6, 2021')
-  })
-
-  it('should render a temperature with round 72.6 to up', () => {
-    spyOn(weatherService, 'getCurrentWeather').and.returnValue(of(current))
-    fixture.detectChanges()
-
-    expect(localWeatherElement.textContent).toContain('73 ºF')
+    expect(titleEl.textContent).toContain('Bethesda, US')
+    expect(dateEl.textContent).toContain('Monday, December 6, 2021')
+    expect(temperatureEl.textContent).toContain('280 ºF')
   })
 })
