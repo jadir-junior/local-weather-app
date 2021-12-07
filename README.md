@@ -119,3 +119,7 @@ We can do this by installing a small `http-server` and run it in parellel to eit
 "cypress:run": "npm run build && concurrently 'npm run serve:dist' 'cypress run'",
 "serve:dist": "http-server ./dist/{name project} -a localhost -p 4200 -c-1"
 ```
+
+# Testing ci
+
+## Testing CI Cache

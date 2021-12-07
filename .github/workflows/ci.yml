@@ -1,32 +1,48 @@
-name: workflow ci angular
+name: CI Angular
 on: [pull_request]
 
-  jobs:
-    build:
-      runs-on: ubuntu-latest
-      steps:
-        - name: Checkout Repository
-          uses: actions/checkout@v2
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-        - name: Setup Node
-          uses: actions/setup-node@v1
-          with:
-            node-version: 14.x
+    strategy:
+      matrix:
+        node-version: [14.x]
 
-        - name: Install dependencies
-          run: npm install
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
 
-        - name: Styling
-          run: npm run style
+      - name: Setup Node
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
 
-        - name: Linting
-          run: npm run lint
+      - name: Cache Node modules
+        uses: actions/cache@v2
+        env:
+          cache-name: cache-node-modules
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-build-${{ env.cache-name }}-
+            ${{ runner.os }}-build-
+            ${{ runner.os }}
 
-        - name: Building
-          run: npm run build:prod
+      - name: Install dependencies
+        if: steps.cache-nodemodules.outputs.cache-hit != 'true'
+        run: |
+          npm install
 
-        - name: Test
-          run: npm run test:coverage
+      - name: Styling
+        run: npm run style
 
-        - name: E2E
-          run: npm run e2e
+      - name: Linting
+        run: npm run lint
+
+      - name: Building
+        run: npm run build:prod
+
+      - name: Unit Testing (Jasmine + Karma)
+        run: npm run test:ci
