@@ -62,13 +62,16 @@ describe('CurrentWeatherComponent', () => {
     expect(component.current?.temperature).toEqual(280.32)
     // Assert DOM
     const debugEl: DebugElement = fixture.debugElement
-    const debugElements: DebugElement[] = debugEl.queryAll(By.css('span'))
-    const titleEl: HTMLElement = debugElements[0].nativeElement
-    const dateEl: HTMLElement = debugElements[1].nativeElement
-    const temperatureEl: HTMLElement = debugElements[2].nativeElement
+    const titleEl: HTMLElement = debugEl.query(
+      By.css('[aria-label="City and Country"]')
+    ).nativeElement
+    const dateEl: HTMLElement = debugEl.query(By.css('[aria-label="Date"]')).nativeElement
+    const temperatureEl: HTMLElement = debugEl.query(
+      By.css('[aria-label="Temperature"]')
+    ).nativeElement
 
     expect(titleEl.textContent).toContain('Bethesda, US')
-    expect(dateEl.textContent).toContain('Monday, December 6, 2021')
-    expect(temperatureEl.textContent).toContain('280 ºF')
+    expect(dateEl.textContent).toContain(`Monday Dec 6th`)
+    expect(temperatureEl.textContent).toContain('280ºF')
   })
 })
