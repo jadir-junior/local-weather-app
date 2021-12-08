@@ -7,6 +7,7 @@ import { CurrentWeatherComponent } from './current-weather/current-weather.compo
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { FlexLayoutModule } from '@angular/flex-layout'
 import { MaterialModule } from './material.module'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 
 @NgModule({
   declarations: [AppComponent, CurrentWeatherComponent],
@@ -16,6 +17,8 @@ import { MaterialModule } from './material.module'
     BrowserAnimationsModule,
     FlexLayoutModule,
     MaterialModule,
+    FormsModule,
+    ReactiveFormsModule,
   ],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
