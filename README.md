@@ -94,13 +94,36 @@ configure code coverage and debug
 }
 ```
 
-3. Configute ESLint
+4. Configure Import Sort
+
+Install the extension on **VScode** -> **sort-imports**
+
+Install the pacakge **import-sort** on dev deps
+
+`npm i -D import-sort import-sort-cli`
+
+add on prettier (style) script import-sort configuration
+
+```
+// package.json
+{
+  ...
+  scripts: {
+    "style": "import-sort -l '**/{src,tests,e2e}/**/*.ts' && prettier --check '**/{src,tests,e2e}/**/*.{*.css,ts}'",
+    "style:fix": "import-sort --write '**/{src,tests,e2e}/**/*.ts' && prettier --write '**/{src,tests,e2e}/**/*.{*css,ts}' && js-beautify '**/src/**/*.html'",
+  }
+}
+```
+
+5. Configute ESLint
 
 ```
 ng add @angular-eslint/schematics
 ```
 
-4. Configure Cypress
+configure eslint-prettier `npm i -D eslint-plugin-prettier eslint-config-prettier`
+
+6. Configure Cypress
 
 ```
 ng add @cypress/schematic

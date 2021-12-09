@@ -1,7 +1,6 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing'
-import { TestBed } from '@angular/core/testing'
-
 import { PostalCodeService } from './postal-code.service'
+import { TestBed } from '@angular/core/testing'
 
 describe('PostalCodeService', () => {
   let service: PostalCodeService

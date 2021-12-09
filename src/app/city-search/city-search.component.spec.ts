@@ -1,22 +1,22 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing'
-import { DebugElement } from '@angular/core'
-import { ComponentFixture, fakeAsync, TestBed, tick } from '@angular/core/testing'
-import { FormsModule, ReactiveFormsModule, ValidationErrors } from '@angular/forms'
-import { By } from '@angular/platform-browser'
 import {
   BrowserAnimationsModule,
   NoopAnimationsModule,
 } from '@angular/platform-browser/animations'
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing'
+import { FormsModule, ReactiveFormsModule, ValidationErrors } from '@angular/forms'
 import {
+  ObservablePropertyStrategy,
   autoSpyObj,
   injectSpy,
-  ObservablePropertyStrategy,
 } from 'angular-unit-test-helper'
-import { of } from 'rxjs'
+
+import { By } from '@angular/platform-browser'
+import { CitySearchComponent } from './city-search.component'
+import { DebugElement } from '@angular/core'
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { MaterialModule } from '../material.module'
 import { WeatherService } from '../weather/weather.service'
-
-import { CitySearchComponent } from './city-search.component'
+import { of } from 'rxjs'
 
 const type = (input: string, value: string, fixture: ComponentFixture<any>): void => {
   let debugEl: DebugElement = fixture.debugElement.query(By.css(input))
