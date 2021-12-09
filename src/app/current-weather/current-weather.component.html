@@ -1,5 +1,4 @@
-<div *ngIf="!current">no data</div>
-<div *ngIf="current">
+<div *ngIf="current$ | async as current">
   <div fxLayout="row">
     <div fxFlex="66%" class="mat-title no-margin" aria-label="City and Country">
       {{ current?.city }}, {{ current?.country }}
@@ -11,7 +10,7 @@
   </div>
   <div fxLayout="row" fxLayoutAlign="center center">
     <div fxFlex="55%">
-      <img style="zoom: 175%" [src]="current?.image" alt="Sunny Image" />
+      <img style="zoom: 175%" [src]="current?.image" [alt]="current?.description" />
     </div>
     <div fxFlex class="right no-margin" aria-label="Temperature">
       <p class="mat-display-3">
