@@ -12,7 +12,6 @@ describe('CurrentWeatherComponent', () => {
   let component: CurrentWeatherComponent
   let fixture: ComponentFixture<CurrentWeatherComponent>
   let weatherService: WeatherService
-  let compiled: HTMLElement
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -26,7 +25,6 @@ describe('CurrentWeatherComponent', () => {
     fixture = TestBed.createComponent(CurrentWeatherComponent)
     component = fixture.componentInstance
     weatherService = fixture.debugElement.injector.get(WeatherService)
-    compiled = fixture.debugElement.nativeElement
   })
 
   it('should create', () => {

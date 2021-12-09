@@ -121,9 +121,69 @@ add on prettier (style) script import-sort configuration
 ng add @angular-eslint/schematics
 ```
 
-configure eslint-prettier `npm i -D eslint-plugin-prettier eslint-config-prettier`
+configure eslint, typescript-eslint and eslint-prettier
 
-6. Configure Cypress
+```
+npm i -D eslint-plugin-prettier eslint-config-prettier typescript-eslint
+```
+
+```
+// eslintrc.json
+{
+  ...
+  "overrides": [
+    {
+      ...
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/recommended--extra",
+        "plugin:@angular-eslint/template/process-inline-template",
+        "plugin:prettier/recommended"
+      ]
+    }
+  ]
+}
+```
+
+Configure rules on ESlint
+
+"no-console"
+There are three modes for a rule in eslint:
+
+- "off" means 0 (turns the rule off completely)
+- "warn" means 1 (turns the rule on but won't make the linter fail)
+- "error" means 2 (turns the rule on and will make the linter fail)
+
+Configure Sort imports on ESlint
+
+```
+// eslintrc.json
+{
+  ...
+  "overrides": [
+    {
+      ...
+      "rules": {
+        "sort-imports": [
+          "error",
+          {
+            "ignoreCase": false,
+            "ignoreDeclarationSort": false,
+            "ignoreMemberSort": false,
+            "memberSyntaxSortOrder": ["none", "all", "multiple", "single"],
+            "allowSeparatedGroups": false
+          }
+        ],
+        "no-console": 1
+      }
+    }
+  ]
+}
+```
+
+1. Configure Cypress
 
 ```
 ng add @cypress/schematic

@@ -2,8 +2,8 @@ import {
   BrowserAnimationsModule,
   NoopAnimationsModule,
 } from '@angular/platform-browser/animations'
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing'
-import { FormsModule, ReactiveFormsModule, ValidationErrors } from '@angular/forms'
+import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import {
   ObservablePropertyStrategy,
   autoSpyObj,
@@ -13,14 +13,17 @@ import {
 import { By } from '@angular/platform-browser'
 import { CitySearchComponent } from './city-search.component'
 import { DebugElement } from '@angular/core'
-import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { MaterialModule } from '../material.module'
 import { WeatherService } from '../weather/weather.service'
 import { of } from 'rxjs'
 
-const type = (input: string, value: string, fixture: ComponentFixture<any>): void => {
-  let debugEl: DebugElement = fixture.debugElement.query(By.css(input))
-  let inputEl: HTMLInputElement = debugEl.nativeElement
+const type = (
+  input: string,
+  value: string,
+  fixture: ComponentFixture<CitySearchComponent>
+): void => {
+  const debugEl: DebugElement = fixture.debugElement.query(By.css(input))
+  const inputEl: HTMLInputElement = debugEl.nativeElement
 
   expect(inputEl.value).toBe('')
 

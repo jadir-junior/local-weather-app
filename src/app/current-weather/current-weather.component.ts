@@ -1,5 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
-
+import { Component } from '@angular/core'
 import { ICurrentWeather } from '../interfaces'
 import { Observable } from 'rxjs'
 import { WeatherService } from '../weather/weather.service'
@@ -14,6 +13,7 @@ export class CurrentWeatherComponent {
 
   constructor(private weatherService: WeatherService) {
     this.current$ = this.weatherService.currentWeather$
+    console.log(this.current$)
   }
 
   getOrdinal(date: number) {

@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core'
 import { FormControl, Validators } from '@angular/forms'
 import { debounceTime, filter, tap } from 'rxjs'
 
+import { Component } from '@angular/core'
 import { WeatherService } from '../weather/weather.service'
 
 @Component({
@@ -30,7 +30,6 @@ export class CitySearchComponent {
   }
 
   getErrorMessage(): string {
-    console.log('entrou')
     return this.search.hasError('minlength')
       ? 'Type more than one character to search'
       : ''
