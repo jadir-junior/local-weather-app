@@ -14,7 +14,7 @@
     "test:debug": "ng test -- --source-map",
     "test:coverage": "ng test -- --code-coverage",
     "test:ci": "ng test --browsers ChromeHeadless --code-coverage --watch=false",
-    "lint": "ng lint",
+    "lint": "ng lint --max-warnings 0",
     "e2e": "ng e2e",
     "cypress:open": "concurrently 'npm start' 'cypress open'",
     "cypress:run": "npm run build && concurrently 'npm run serve:dist' 'cypress run'",
