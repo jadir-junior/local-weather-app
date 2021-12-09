@@ -1,18 +1,17 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing'
-import { DebugElement } from '@angular/core'
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+
 import { By } from '@angular/platform-browser'
+import { CurrentWeatherComponent } from './current-weather.component'
+import { DebugElement } from '@angular/core'
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { MaterialModule } from '../material.module'
 import { WeatherService } from '../weather/weather.service'
 import { fakeWeather } from '../weather/weather.service.fake'
-
-import { CurrentWeatherComponent } from './current-weather.component'
 
 describe('CurrentWeatherComponent', () => {
   let component: CurrentWeatherComponent
   let fixture: ComponentFixture<CurrentWeatherComponent>
   let weatherService: WeatherService
-  let compiled: HTMLElement
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -26,7 +25,6 @@ describe('CurrentWeatherComponent', () => {
     fixture = TestBed.createComponent(CurrentWeatherComponent)
     component = fixture.componentInstance
     weatherService = fixture.debugElement.injector.get(WeatherService)
-    compiled = fixture.debugElement.nativeElement
   })
 
   it('should create', () => {

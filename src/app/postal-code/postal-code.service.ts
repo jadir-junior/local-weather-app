@@ -1,6 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http'
+import { Observable, defaultIfEmpty, mergeMap } from 'rxjs'
+
 import { Injectable } from '@angular/core'
-import { defaultIfEmpty, mergeMap, Observable } from 'rxjs'
 import { environment } from 'src/environments/environment'
 
 export interface IPostalCode {

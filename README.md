@@ -94,13 +94,97 @@ configure code coverage and debug
 }
 ```
 
-3. Configute ESLint
+4. Configure Import Sort
+
+Install the extension on **VScode** -> **sort-imports**
+
+Install the pacakge **import-sort** on dev deps
+
+`npm i -D import-sort import-sort-cli`
+
+add on prettier (style) script import-sort configuration
+
+```
+// package.json
+{
+  ...
+  scripts: {
+    "style": "import-sort -l '**/{src,tests,e2e}/**/*.ts' && prettier --check '**/{src,tests,e2e}/**/*.{*.css,ts}'",
+    "style:fix": "import-sort --write '**/{src,tests,e2e}/**/*.ts' && prettier --write '**/{src,tests,e2e}/**/*.{*css,ts}' && js-beautify '**/src/**/*.html'",
+  }
+}
+```
+
+5. Configute ESLint
 
 ```
 ng add @angular-eslint/schematics
 ```
 
-4. Configure Cypress
+configure eslint, typescript-eslint and eslint-prettier
+
+```
+npm i -D eslint-plugin-prettier eslint-config-prettier typescript-eslint
+```
+
+```
+// eslintrc.json
+{
+  ...
+  "overrides": [
+    {
+      ...
+      "extends": [
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:@angular-eslint/recommended",
+        "plugin:@angular-eslint/recommended--extra",
+        "plugin:@angular-eslint/template/process-inline-template",
+        "plugin:prettier/recommended"
+      ]
+    }
+  ]
+}
+```
+
+Configure rules on ESlint
+
+"no-console"
+configure just to allow console.error
+
+Configure Sort imports on ESlint
+
+```
+// eslintrc.json
+{
+  ...
+  "overrides": [
+    {
+      ...
+      "rules": {
+        "sort-imports": [
+          "error",
+          {
+            "ignoreCase": false,
+            "ignoreDeclarationSort": false,
+            "ignoreMemberSort": false,
+            "memberSyntaxSortOrder": ["none", "all", "multiple", "single"],
+            "allowSeparatedGroups": false
+          }
+        ],
+        "no-console": [
+          "warn",
+          {
+            "allow": ["error"]
+          }
+        ]
+      }
+    }
+  ]
+}
+```
+
+1. Configure Cypress
 
 ```
 ng add @cypress/schematic

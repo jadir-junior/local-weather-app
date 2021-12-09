@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core'
+import { Component } from '@angular/core'
 import { ICurrentWeather } from '../interfaces'
-import { WeatherService } from '../weather/weather.service'
 import { Observable } from 'rxjs'
+import { WeatherService } from '../weather/weather.service'
 
 @Component({
   selector: 'app-current-weather',

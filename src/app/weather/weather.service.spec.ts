@@ -2,10 +2,10 @@ import {
   HttpClientTestingModule,
   HttpTestingController,
 } from '@angular/common/http/testing'
-import { TestBed } from '@angular/core/testing'
-
-import { WeatherService } from './weather.service'
 import { fakeWeather, fakeWeatherData } from './weather.service.fake'
+
+import { TestBed } from '@angular/core/testing'
+import { WeatherService } from './weather.service'
 
 describe('WeatherService', () => {
   let weatherService: WeatherService
