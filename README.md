@@ -150,11 +150,7 @@ npm i -D eslint-plugin-prettier eslint-config-prettier typescript-eslint
 Configure rules on ESlint
 
 "no-console"
-There are three modes for a rule in eslint:
-
-- "off" means 0 (turns the rule off completely)
-- "warn" means 1 (turns the rule on but won't make the linter fail)
-- "error" means 2 (turns the rule on and will make the linter fail)
+configure just to allow console.error
 
 Configure Sort imports on ESlint
 
@@ -176,7 +172,12 @@ Configure Sort imports on ESlint
             "allowSeparatedGroups": false
           }
         ],
-        "no-console": 1
+        "no-console": [
+          "warn",
+          {
+            "allow": ["error"]
+          }
+        ]
       }
     }
   ]
