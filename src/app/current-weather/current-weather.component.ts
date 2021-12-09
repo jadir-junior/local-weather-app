@@ -13,7 +13,6 @@ export class CurrentWeatherComponent {
 
   constructor(private weatherService: WeatherService) {
     this.current$ = this.weatherService.currentWeather$
-    console.log(this.current$)
   }
 
   getOrdinal(date: number) {
