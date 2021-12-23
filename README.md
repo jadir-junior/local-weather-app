@@ -2,35 +2,13 @@
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.0.3.
 
-## Development server
-
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
-
 ## Extensions (Plugins) for Angular Development
 
 - Angular Language Service
 - Angular Snippets (John Papa)
-- TSLint (Microsoft)
+- Prettier (Prettier)
+- sort-imports (VSC Sort Import)
+- Beautify (HookyQR)
 - ESLint (Microsoft)
 - Nx Console (nrwl)
 
@@ -94,13 +72,13 @@ configure code coverage and debug
 }
 ```
 
-4. Configure Import Sort
+3. Configure Import Sort
 
 Install the extension on **VScode** -> **sort-imports**
 
 Install the pacakge **import-sort** on dev deps
 
-`npm i -D import-sort import-sort-cli`
+`npm i -D import-sort import-sort-cli import-sort-parser-typescript import-sort-style-module`
 
 add on prettier (style) script import-sort configuration
 
@@ -115,7 +93,22 @@ add on prettier (style) script import-sort configuration
 }
 ```
 
-5. Configute ESLint
+and configure on **package.json**
+
+```
+{
+  ...
+  "importSort": {
+    ".ts, .tsx": {
+      "parser": "typescript",
+      "style": "module",
+      "options": {}
+    }
+  }
+}
+```
+
+4. Configute ESLint
 
 ```
 ng add @angular-eslint/schematics
@@ -184,7 +177,7 @@ Configure Sort imports on ESlint
 }
 ```
 
-1. Configure Cypress
+5. Configure Cypress
 
 ```
 ng add @cypress/schematic
@@ -284,7 +277,7 @@ obs: `npm ci` is better on ci envoriment otherwise `npm install`
 
 ### Unit testing (Jasmine + Karma)
 
-Let1s run test in production mode, we need to make sure while running Test:
+Let's run test in production mode, we need to make sure while running Test:
 
 - we are using **chrome headless broweser**
 - Generating **code coverage**
@@ -301,4 +294,19 @@ scripts: {
 ```
   - name: Unit Testing (Jasmine + Karma)
     run: npm run test:ci
+```
+
+## Configure dependabot
+
+To configure a dependabot I need create and write on folder **.github** in the file **dependabot.yml**
+
+```
+version: 2
+updates:
+  - package-ecosystem: 'npm'
+    directory: '/'
+    schedule:
+      interval: 'daily'
+    open-pull-requests-limit: 10
+
 ```
