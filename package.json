@@ -40,18 +40,18 @@
     "zone.js": "~0.11.4"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~13.0.3",
+    "@angular-devkit/build-angular": "~13.1.2",
     "@angular-eslint/builder": "13.0.1",
     "@angular-eslint/eslint-plugin": "13.0.1",
     "@angular-eslint/eslint-plugin-template": "13.0.1",
     "@angular-eslint/schematics": "13.0.1",
     "@angular-eslint/template-parser": "13.0.1",
-    "@angular/cli": "~13.0.3",
+    "@angular/cli": "~13.1.2",
     "@angular/compiler-cli": "~13.0.0",
     "@cypress/schematic": "^1.6.0",
     "@types/jasmine": "~3.10.0",
     "@types/node": "^12.11.1",
-    "@typescript-eslint/eslint-plugin": "5.3.0",
+    "@typescript-eslint/eslint-plugin": "5.8.0",
     "@typescript-eslint/parser": "5.8.0",
     "angular-unit-test-helper": "^12.0.0",
     "concurrently": "^6.5.1",
@@ -75,7 +75,7 @@
     "ng-tester": "^9.0.0",
     "pa11y": "^6.1.1",
     "pa11y-ci": "^3.0.1",
-    "prettier": "^2.5.0",
+    "prettier": "^2.5.1",
     "typescript": "~4.4.3",
     "typescript-eslint": "0.0.1-alpha.0"
   }
