@@ -1,7 +1,7 @@
-import { Component } from '@angular/core'
 import { FormControl, Validators } from '@angular/forms'
 import { debounceTime, filter, tap } from 'rxjs'
 
+import { Component } from '@angular/core'
 import { WeatherService } from '../weather/weather.service'
 
 @Component({

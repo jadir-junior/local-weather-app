@@ -1,15 +1,15 @@
-import { HttpClient, HttpParams } from '@angular/common/http'
-import { Injectable } from '@angular/core'
 import { BehaviorSubject, Observable } from 'rxjs'
-import { map, switchMap } from 'rxjs/operators'
-import { environment } from 'src/environments/environment'
-
-import { ICurrentWeather } from '../interfaces'
+import { HttpClient, HttpParams } from '@angular/common/http'
 import {
   IPostalCode,
   PostalCodeService,
   defaultPostalCode,
 } from '../postal-code/postal-code.service'
+import { map, switchMap } from 'rxjs/operators'
+
+import { ICurrentWeather } from '../interfaces'
+import { Injectable } from '@angular/core'
+import { environment } from 'src/environments/environment'
 
 export interface ICurrentWeatherData {
   weather: [

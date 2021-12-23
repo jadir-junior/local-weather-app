@@ -78,7 +78,7 @@ Install the extension on **VScode** -> **sort-imports**
 
 Install the pacakge **import-sort** on dev deps
 
-`npm i -D import-sort import-sort-cli import-sort-parser-typescript import-sort-style-module`
+`npm i -D import-sort import-sort-cli import-sort-parser-typescript`
 
 add on prettier (style) script import-sort configuration
 
@@ -101,14 +101,14 @@ and configure on **package.json**
   "importSort": {
     ".ts, .tsx": {
       "parser": "typescript",
-      "style": "module",
+      "style": "eslint",
       "options": {}
     }
   }
 }
 ```
 
-4. Configute ESLint
+1. Configute ESLint
 
 ```
 ng add @angular-eslint/schematics

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core'
-import { Observable } from 'rxjs'
-
 import { ICurrentWeather } from '../interfaces'
+import { Observable } from 'rxjs'
 import { WeatherService } from '../weather/weather.service'
 
 @Component({
