@@ -33,7 +33,7 @@
     "prenow:publish": "npm run build",
     "now:publish": "now --platform-version 2 dist/local-weather-app",
     "predocker:build": "npm run build && npm run test:ci",
-    "docker:build": "cross-conf-env docker image build . -y $npm_package_config_imageRepo:$npm_package_version",
+    "docker:build": "cross-conf-env docker image build . -t $npm_package_config_imageRepo:$npm_package_version",
     "postdocker:build": "npm run docker:tag",
     "docker:tag": "cross-conf-env docker image tag $npm_package_config_imageRepo:$npm_package_version $npm_package_config_imageRepo:latest",
     "docker:stop": "cross-conf-env docker stop $npm_package_config_imageName || true",
