@@ -17,6 +17,7 @@
     "lint": "ng lint --max-warnings 0",
     "e2e": "ng e2e",
     "prepare": "husky install",
+    "pre-commit": "lint-staged",
     "cypress:open": "concurrently 'npm start' 'cypress open'",
     "cypress:run": "npm run build && concurrently 'npm run serve:dist' 'cypress run'",
     "test:a11y": "pa11y --standard WCAG2A http://localhost:4200",
@@ -74,6 +75,7 @@
     "karma-coverage": "~2.1.0",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "lint-staged": "^12.1.4",
     "ng-tester": "^9.0.0",
     "pa11y": "^6.1.1",
     "pa11y-ci": "^3.0.1",
@@ -87,5 +89,11 @@
       "style": "eslint",
       "options": {}
     }
+  },
+  "lint-staged": {
+    "src/**/*.{ts,css,html}": [
+      "npm run style",
+      "npm run lint"
+    ]
   }
 }
