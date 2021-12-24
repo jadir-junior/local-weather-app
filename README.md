@@ -108,7 +108,7 @@ and configure on **package.json**
 }
 ```
 
-1. Configute ESLint
+4. Configute ESLint
 
 ```
 ng add @angular-eslint/schematics
@@ -177,7 +177,56 @@ Configure Sort imports on ESlint
 }
 ```
 
-5. Configure Cypress
+5. Configure Husky and Lint-Staged
+
+To configure **Husky** and **lint-staged** you need install `npm install -D husky lint-staged`
+
+configure **lint-staged** in **package.json**
+
+```
+{
+  ...
+  "lint-staged": {
+    "src/**/*.{ts,css,html}": [
+      "npm run style"
+    ],
+    "src/**/*.{ts}": [
+      "npm run lint:staged"
+    ]
+  }
+}
+```
+
+create a prepare script and hooks
+
+```
+// package.json
+{
+  "scripts": {
+    ...
+    "lint:staged": "eslint src --max-warnings=0",
+    "test:pre-push": "ng test --browser ChromeHeadless --code-coverage --watch=false",
+    "prepare": "husky install",
+    "pre-commit": "lint-staged",
+    "pre-push": "npm run test:pre-push"
+  }
+}
+```
+
+and execute the script
+
+```
+npm run prepare
+```
+
+and create a hooks to **husky**
+
+```
+npx husky add .husky/pre-commit "npm run pre-commit"
+npx husky add .husky/pre-psuh "npm run pre-push"
+```
+
+6. Configure Cypress
 
 ```
 ng add @cypress/schematic
