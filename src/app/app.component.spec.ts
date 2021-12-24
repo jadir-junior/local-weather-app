@@ -19,6 +19,8 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent)
     const app = fixture.componentInstance
     expect(app).toBeTruthy()
+    const ope = 'opa'
+    expect(ope).toBe('opa')
   })
 
   it('should render title in a toolbar', () => {

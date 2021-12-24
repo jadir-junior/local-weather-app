@@ -16,6 +16,7 @@
     "test:ci": "ng test --browsers ChromeHeadless --code-coverage --watch=false",
     "test:pre-push": "ng test --browsers ChromeHeadless --code-coverage --watch=false",
     "lint": "ng lint --max-warnings 0",
+    "lint:staged": "eslint src --max-warnings=0",
     "e2e": "ng e2e",
     "prepare": "husky install",
     "pre-commit": "lint-staged",
@@ -94,8 +95,10 @@
   },
   "lint-staged": {
     "src/**/*.{ts,css,html}": [
-      "npm run style",
-      "npm run lint"
+      "npm run style"
+    ],
+    "src/**/*.{ts}": [
+      "npm run lint:staged"
     ]
   }
 }
