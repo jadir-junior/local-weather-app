@@ -6,24 +6,26 @@ jobs:
     working_directory: ~/repo
     steps:
       - checkout
-
       - restore_cache:
           keys:
             - v1-dependencies-{{ checksum "package-lock.json" }}
+            - v1-dependencies-
+
       - run: npm ci
 
       # because we use "npm ci" to install NPM dependencies
       # we cache "~/.npm" folder
       - save_cache:
-          key: v1-dependencies-{{ checksum "package-lock.json" }}
           paths:
             - ~/.npm
+          key: v1-dependencies-{{ checksum "package-lock.json" }}
 
       - run: npm run style
       - run: npm run lint
 
       - run: npm run build
       - run: npm run test:ci
+
       - run:
           name: Tar & Gzip compiled app
           command: tar zcf dist.tar.gz dist/local-weather-app
@@ -31,11 +33,11 @@ jobs:
           path: dist.tar.gz
 
       - run:
-        name: Move compiled app to workspace
-        command: |
-          set -exu
-          mkdir -p /tmp/workspace/dist
-          mv dist/local-weather-app /tmp/workspace/dist/
+          name: Move compiled app to workspace
+          command: |
+            set -exu
+            mkdir -p /tmp/workspace/dist
+            mv dist/local-weather-app /tmp/workspace/dist/
       - persist_to_workspace:
           root: /tmp/workspace
           paths:
