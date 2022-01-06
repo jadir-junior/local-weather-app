@@ -81,7 +81,7 @@
     "@typescript-eslint/eslint-plugin": "5.8.1",
     "@typescript-eslint/parser": "5.8.1",
     "angular-unit-test-helper": "^12.0.0",
-    "concurrently": "^6.5.1",
+    "concurrently": "^7.0.0",
     "cross-conf-env": "^1.2.1",
     "cypress": "latest",
     "dev-norms": "1.7.1",
