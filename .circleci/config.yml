@@ -49,7 +49,7 @@ jobs:
     steps:
       - attach_workspace:
           at: /tmp/workspace
-      - run: npx now --tokan $NOW_TOKEN --platform-version 2 --prod /tmp/workspace/dist/local-weather-app --confirm
+      - run: npx now --token $NOW_TOKEN --platform-version 2 --prod /tmp/workspace/dist/local-weather-app --confirm
 
 workflows:
   version: 2
