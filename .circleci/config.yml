@@ -56,12 +56,12 @@ workflows:
   build-test-and-approval-deploy:
     jobs:
       - build
-      - test
+      - test:ci
       - hold:
           type: approval
           requires:
             - build
-            - test
+            - test:ci
           filters:
             branches:
               only: master
