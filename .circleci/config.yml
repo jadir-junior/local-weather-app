@@ -23,8 +23,12 @@ jobs:
       - run: npm run style
       - run: npm run lint
 
-      - run: npm run build
-      - run: npm run test:ci
+      - run:
+          name: build
+          command: npm run build
+      - run:
+          name: test
+          command: npm run test:ci
 
       - run:
           name: Tar & Gzip compiled app
@@ -53,9 +57,16 @@ jobs:
 
 workflows:
   version: 2
-  build-test-and-deploy:
+  build-test-and-approval-deploy:
     jobs:
       - build
-      - deploy:
+      - hold:
+          type: approval
           requires:
             - build
+          filters:
+            branches:
+              only: master
+      - deploy:
+          requires:
+            - hold
