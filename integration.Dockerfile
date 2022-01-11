@@ -14,3 +14,15 @@ RUN npm run style
 RUN npm run lint
 
 RUN npm run build
+
+FROM duluca/minimal-node-chromium:lts-alpine as tester
+
+ENV BUILDER_SRC_DIR=/usr/src
+ENV TESTER_SRC_DIR=/usr/src
+
+WORKDIR $TESTER_SRC_DIR
+COPY --from=builder $BUILDER_SRC_DIR .
+
+WORKDIR $TESTER_SRC_DIR
+
+RUN npm run test
