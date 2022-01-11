@@ -10,8 +10,8 @@
   },
   "scripts": {
     "ng": "ng",
-    "style": "import-sort -l '**/{src,tests,e2e}/**/*.ts' && prettier --check '**/{src,tests,e2e}/**/*.{*.css,ts}'",
-    "style:fix": "import-sort --write '**/{src,tests,e2e}/**/*.ts' && prettier --write '**/{src,tests,e2e}/**/*.{*css,ts}' && js-beautify '**/src/**/*.html'",
+    "style": "import-sort -l '**/{src,tests,e2e}/**/*.{ts}' && prettier --check '**/{src,tests,e2e}/**/*.{*.css,ts}'",
+    "style:fix": "import-sort --write '**/{src,tests,e2e}/**/*.{ts}' && prettier --write '**/{src,tests,e2e}/**/*.{*css,ts}' && js-beautify '**/src/**/*.html'",
     "start": "ng serve --open",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
