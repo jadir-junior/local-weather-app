@@ -20,16 +20,16 @@ jobs:
       - store_artifacts:
           path: docker-cache/build-image-tar.gz
           destination: build-image.tar.gz
-    - run:
-        name: Move compiled app to workspace
-        command: |
-          set -exu
-          mkdir -p /tmp/workspace/dist
-          mv dist/local-weather-app /tmp/workspace/dist/
-    - persist_to_workspace:
-        root: /tmp/workspace
-        paths:
-          - dist/local-weather-app
+      - run:
+          name: Move compiled app to workspace
+          command: |
+            set -exu
+            mkdir -p /tmp/workspace/dist
+            mv dist/local-weather-app /tmp/workspace/dist/
+      - persist_to_workspace:
+          root: /tmp/workspace
+          paths:
+            - dist/local-weather-app
   deploy:
     docker:
       - image: circleci/node:lts
