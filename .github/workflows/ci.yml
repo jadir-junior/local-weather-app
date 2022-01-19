@@ -33,7 +33,7 @@ jobs:
       - name: Install dependencies
         if: steps.cache-nodemodules.outputs.cache-hit != 'true'
         run: |
-          npm ci
+          npm ci --only=production
 
       - name: Styling
         run: npm run style
