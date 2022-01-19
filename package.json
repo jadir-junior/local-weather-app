@@ -85,7 +85,7 @@
     "cross-conf-env": "^1.2.1",
     "cypress": "latest",
     "dev-norms": "1.7.1",
-    "eslint": "^8.6.0",
+    "eslint": "^8.7.0",
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "http-server": "^14.1.0",
