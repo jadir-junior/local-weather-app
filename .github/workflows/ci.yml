@@ -33,7 +33,7 @@ jobs:
       - name: Install dependencies
         if: steps.cache-nodemodules.outputs.cache-hit != 'true'
         run: |
-          npm set-script prepare "" && npm ci --omit=dev
+          npm ci
 
       - name: Styling
         run: npm run style
