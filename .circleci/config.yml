@@ -2,24 +2,40 @@ version: 2.1
 jobs:
   build:
     docker:
-      - image: circleci/node:lts
+      - image: circleci/node:lts-browsers
     working_directory: ~/repo
     steps:
       - checkout
-      - setup_remote_docker
-      - run:
-          name: Execute Pipeline (Build Source -> Test -> Build Web Server)
-          command: |
-            docker build -f integration.Dockerfile . -t local-weather-app:$CIRCLE_BRANCH
-            mkdir -p docker-cache
-            docker save local-weather-app:$CIRCLE_BRANCH | gzip > docker-cache/built-image.tar.gz
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "package-lock.json" }}
+            - v1-dependencies-
+
+      - run: npm ci
+
+      # because we use "npm ci" to install NPM dependencies
+      # we cache "~/.npm" folder
       - save_cache:
-          key: build-image-{{ .BuildNum }}
           paths:
-            - docker-cache
+            - ~/.npm
+          key: v1-dependencies-{{ checksum "package-lock.json" }}
+
+      - run: npm run style
+      - run: npm run lint
+
+      - run:
+          name: build
+          command: npm run build
+      - run:
+          name: test
+          command: npm run test:ci
+
+      - run:
+          name: Tar & Gzip compiled app
+          command: tar zcf dist.tar.gz dist/local-weather-app
       - store_artifacts:
-          path: docker-cache/build-image-tar.gz
-          destination: build-image.tar.gz
+          path: dist.tar.gz
+
       - run:
           name: Move compiled app to workspace
           command: |
@@ -46,4 +62,4 @@ workflows:
       - build
       - deploy:
           requires:
-            - build
+            - hold
