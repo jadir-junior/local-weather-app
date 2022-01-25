@@ -24,7 +24,6 @@
     "lint": "ng lint --max-warnings 0",
     "lint:staged": "eslint src --max-warnings=0",
     "e2e": "ng e2e",
-    "prepare": "husky install",
     "pre-commit": "lint-staged",
     "pre-push": "npm run test:pre-push",
     "cypress:open": "concurrently 'npm start' 'cypress open'",
