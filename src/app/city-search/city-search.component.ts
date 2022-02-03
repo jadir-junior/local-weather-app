@@ -1,19 +1,19 @@
+import { Component, OnDestroy } from '@angular/core'
 import { FormControl, Validators } from '@angular/forms'
-import { debounceTime, filter, tap } from 'rxjs'
+import { Subscription, debounceTime, filter, tap } from 'rxjs'
 
-import { Component } from '@angular/core'
 import { WeatherService } from '../weather/weather.service'
 
 @Component({
   selector: 'app-city-search',
   templateUrl: './city-search.component.html',
-  styleUrls: ['./city-search.component.css'],
 })
-export class CitySearchComponent {
+export class CitySearchComponent implements OnDestroy {
   search = new FormControl('', [Validators.required, Validators.minLength(2)])
+  private subscription?: Subscription
 
   constructor(private weatherService: WeatherService) {
-    this.search.valueChanges
+    this.subscription = this.search.valueChanges
       .pipe(
         debounceTime(1000),
         filter(() => !this.search.invalid),
@@ -33,5 +33,9 @@ export class CitySearchComponent {
     return this.search.hasError('minlength')
       ? 'Type more than one character to search'
       : ''
+  }
+
+  ngOnDestroy(): void {
+    this.subscription?.unsubscribe()
   }
 }

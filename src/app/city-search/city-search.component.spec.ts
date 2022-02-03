@@ -2,50 +2,28 @@ import {
   BrowserAnimationsModule,
   NoopAnimationsModule,
 } from '@angular/platform-browser/animations'
-import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing'
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
-import {
-  ObservablePropertyStrategy,
-  autoSpyObj,
-  injectSpy,
-} from 'angular-unit-test-helper'
+import { expectText, setBlur, setFieldValue } from '../utils/testing-helper'
 
-import { By } from '@angular/platform-browser'
 import { CitySearchComponent } from './city-search.component'
-import { DebugElement } from '@angular/core'
 import { MaterialModule } from '../material.module'
 import { WeatherService } from '../weather/weather.service'
 import { of } from 'rxjs'
-
-const type = (
-  input: string,
-  value: string,
-  fixture: ComponentFixture<CitySearchComponent>
-): void => {
-  const debugEl: DebugElement = fixture.debugElement.query(By.css(input))
-  const inputEl: HTMLInputElement = debugEl.nativeElement
-
-  expect(inputEl.value).toBe('')
-
-  inputEl.value = value
-
-  inputEl.dispatchEvent(new Event(input))
-  inputEl.dispatchEvent(new Event('blur'))
-  fixture.detectChanges()
-}
+import { weather } from './weather.mock'
 
 describe('CitySearchComponent', () => {
   let component: CitySearchComponent
   let fixture: ComponentFixture<CitySearchComponent>
 
-  let weatherServiceMock: jasmine.SpyObj<WeatherService>
+  let fakeWeatherService: Pick<WeatherService, 'updateCurrentWeather'>
 
   beforeEach(async () => {
-    const weatherServiceSpy = autoSpyObj(
-      WeatherService,
-      ['currentWeather$'],
-      ObservablePropertyStrategy.BehaviorSubject
-    )
+    fakeWeatherService = {
+      updateCurrentWeather: jasmine
+        .createSpy('updateCurrentWeather')
+        .and.returnValue(of(weather)),
+    }
 
     await TestBed.configureTestingModule({
       declarations: [CitySearchComponent],
@@ -56,64 +34,47 @@ describe('CitySearchComponent', () => {
         FormsModule,
         ReactiveFormsModule,
       ],
-      providers: [{ provide: WeatherService, useValue: weatherServiceSpy }],
+      providers: [{ provide: WeatherService, useValue: fakeWeatherService }],
     }).compileComponents()
-
-    weatherServiceMock = injectSpy(WeatherService)
   })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CitySearchComponent)
     component = fixture.componentInstance
+    fixture.detectChanges()
   })
 
-  it('should create', () => {
-    // Arrange
-    weatherServiceMock.getCurrentWeather.and.returnValue(of())
-
-    // Act
+  it('get a error message when type one character', () => {
+    setFieldValue(fixture, 'input-search', 'a')
+    setBlur(fixture, 'input-search')
     fixture.detectChanges()
 
-    // Arrange
-    expect(component).toBeTruthy()
+    expectText(fixture, 'error-message', 'Type more than one character to search')
   })
 
-  xit('should search by the city Bethesda', () => {
+  it('search by the city Jundiai', fakeAsync(() => {
+    setFieldValue(fixture, 'input-search', 'Jundiai')
     fixture.detectChanges()
 
-    type('input', 'Bethesda', fixture)
+    tick(1000)
 
-    expect(component.search.value).toBe('Bethesda')
-    expect(weatherServiceMock.updateCurrentWeather).toHaveBeenCalledWith(
-      'Bethesda',
+    expect(component.search.value).toBe('Jundiai')
+    expect(fakeWeatherService.updateCurrentWeather).toHaveBeenCalledWith(
+      'Jundiai',
       undefined
     )
-  })
+  }))
 
-  xit('should search with city and country', () => {
+  it('search with city and country', fakeAsync(() => {
+    setFieldValue(fixture, 'input-search', 'Jundiai, Brasil')
     fixture.detectChanges()
 
-    type('input', 'Bethesda, US', fixture)
+    tick(1000)
 
-    expect(component.search.value).toBe('Bethesda, US')
-    expect(weatherServiceMock.updateCurrentWeather).toHaveBeenCalledWith('Bethesda', 'US')
-  })
-
-  xit('should get a error message when type one character', () => {
-    spyOn(component, 'getErrorMessage')
-
-    fixture.detectChanges()
-
-    type('input', 'a', fixture)
-
-    const erroEl: HTMLElement = fixture.debugElement.query(
-      By.css('mat-error')
-    ).nativeElement
-
-    expect(component.search.value).toBe('a')
-    // expect(component.getErrorMessage).toHaveBeenCalled()
-    // expect(erroEl.textContent).toContain('Type more than one character to search')
-    expect(erroEl.textContent).toContain('error')
-    // expect mat-error with message
-  })
+    expect(component.search.value).toBe('Jundiai, Brasil')
+    expect(fakeWeatherService.updateCurrentWeather).toHaveBeenCalledWith(
+      'Jundiai',
+      'Brasil'
+    )
+  }))
 })
