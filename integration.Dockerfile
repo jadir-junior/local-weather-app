@@ -6,8 +6,11 @@ ENV BUILDER_SRC_DIR=/usr/src
 WORKDIR $BUILDER_SRC_DIR
 COPY . .
 
-# install dependencies and build
+# setup disabled husky
+# https://github.com/typicode/husky/issues/991
+RUN npm set-script prepare ''
 
+# install dependencies and build
 RUN npm ci
 
 RUN npm run style
