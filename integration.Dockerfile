@@ -8,7 +8,7 @@ COPY . .
 
 # install dependencies and build
 
-RUN npm ci
+RUN npm ci --ingore-scripts --production
 
 RUN npm run style
 RUN npm run lint
