@@ -1,6 +1,6 @@
 {
   "name": "localcast-weather",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "license": "MIT",
   "config": {
     "imageRepo": "jadirjunior/localcast-weather",
