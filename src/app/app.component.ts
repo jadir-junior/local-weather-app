@@ -27,6 +27,7 @@ import { Component } from '@angular/core'
         </mat-card>
         <div fxFlex></div>
       </div>
+      <div fxLayoutAlign="center">Version: 0.0.1</div>
     </div>
   `,
 })
