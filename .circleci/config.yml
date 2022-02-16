@@ -10,9 +10,9 @@ jobs:
       - run:
           name: Execute Pipeline (Build Source -> Test -> Build Web Server)
           command: |
-            docker build -f integration.Dockerfile . -t localcast-weather:$CIRCLE_BRANCH
+            docker build -f integration.Dockerfile . -t local-weather-app:$CIRCLE_BRANCH
             mkdir -p docker-cache
-            docker save localcast-weather:$CIRCLE_BRANCH | gzip > docker-cache/built-image.tar.gz
+            docker save local-weather-app:$CIRCLE_BRANCH | gzip > docker-cache/built-image.tar.gz
 
       - store_artifacts:
           path: docker-cache/build-image.tar.gz
