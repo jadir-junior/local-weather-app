@@ -59,13 +59,16 @@ jobs:
 
 workflows:
   version: 2
-  build-test-and-deploy:
+  build-test-and-approval-deploy:
     jobs:
       - build
       - hold:
           type: approval
           requires:
             - build
+          filters:
+            branches:
+              only: master
       - deploy:
           requires:
             - hold
