@@ -28,7 +28,7 @@ COPY --from=builder $BUILDER_SRC_DIR .
 
 WORKDIR $TESTER_SRC_DIR
 
-RUN npm run test
+RUN npm run test:prod
 
 FROM duluca/minimal-nginx-web-server:1-alpine as webserver
 
