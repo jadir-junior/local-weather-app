@@ -30,7 +30,7 @@ jobs:
           command: npm run build
       - run:
           name: test
-          command: npm run test:prod --code-coverage
+          command: npm run test:prod
 
       - store_test_results:
           path: ./test_results

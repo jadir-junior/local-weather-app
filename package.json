@@ -17,7 +17,7 @@
     "watch": "ng build --watch --configuration development",
     "serve:dist": "http-server ./dist/local-weather-app -a localhost -p 4200 -c-1",
     "test": "ng test --browsers Chrome",
-    "test:prod": "npm test -- --browsers ChromiumNoSandbox --watch=false",
+    "test:prod": "npm test -- --browsers ChromiumNoSandbox --watch=false --code-coverage",
     "test:debug": "ng test -- --source-map",
     "test:coverage": "ng test --browsers ChromiumNoSandbox --watch=false --code-coverage",
     "test:ci": "ng test --browsers ChromeHeadless --code-coverage --watch=false",
