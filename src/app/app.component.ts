@@ -27,7 +27,7 @@ import { Component } from '@angular/core'
         </mat-card>
         <div fxFlex></div>
       </div>
-      <div fxLayoutAlign="center">Version: 0.0.2 (Deploying to GCloud using orbs)</div>
+      <div fxLayoutAlign="center">Version: 0.0.3 (Code coverage Report)</div>
     </div>
   `,
 })
