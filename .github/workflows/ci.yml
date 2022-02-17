@@ -45,4 +45,16 @@ jobs:
         run: npm run build
 
       - name: Unit Testing (Jasmine + Karma)
-        run: npm run test:ci
+        run: npm run test:prod
+
+      - name: Move compiled app to workspace
+        run: |
+          set -exu
+          mkdir -p /tmp/workspace/dist
+          mv dist/local-weather-app /tmp/workspace/dist/
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: compiled-app
+          path: /tmp/workspace/dist/
