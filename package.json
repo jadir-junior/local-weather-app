@@ -63,7 +63,7 @@
     "@angular/material": "^13.1.2",
     "@angular/platform-browser": "^13.1.2",
     "@angular/platform-browser-dynamic": "^13.1.2",
-    "@angular/router": "^13.1.2",
+    "@angular/router": "^13.2.3",
     "rxjs": "~7.5.2",
     "subsink": "^1.0.2",
     "tslib": "^2.3.1",
