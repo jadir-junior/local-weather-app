@@ -6,9 +6,11 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { BrowserModule } from '@angular/platform-browser'
 import { CitySearchComponent } from './city-search/city-search.component'
 import { CurrentWeatherComponent } from './current-weather/current-weather.component'
+import { EffectsModule } from '@ngrx/effects'
 import { FlexLayoutModule } from '@angular/flex-layout'
 import { HttpClientModule } from '@angular/common/http'
 import { MaterialModule } from './material.module'
+import { StoreModule } from '@ngrx/store'
 
 @NgModule({
   declarations: [AppComponent, CurrentWeatherComponent, CitySearchComponent],
@@ -20,6 +22,8 @@ import { MaterialModule } from './material.module'
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    StoreModule.forRoot({}, {}),
+    EffectsModule.forRoot([]),
   ],
   providers: [],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
