@@ -1,40 +1,70 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing'
+import { MockStore, provideMockStore } from '@ngrx/store/testing'
+import {
+  ObservablePropertyStrategy,
+  autoSpyObj,
+  injectSpy,
+} from 'angular-unit-test-helper'
+import { WeatherService, defaultWeather } from '../weather/weather.service'
 
 import { By } from '@angular/platform-browser'
 import { CurrentWeatherComponent } from './current-weather.component'
 import { DebugElement } from '@angular/core'
-import { HttpClientTestingModule } from '@angular/common/http/testing'
+import { ICurrentWeather } from '../interfaces'
 import { MaterialModule } from '../material.module'
-import { WeatherService } from '../weather/weather.service'
+import { Store } from '@ngrx/store'
 import { fakeWeather } from '../weather/weather.service.fake'
+import { of } from 'rxjs'
 
 describe('CurrentWeatherComponent', () => {
   let component: CurrentWeatherComponent
   let fixture: ComponentFixture<CurrentWeatherComponent>
-  let weatherService: WeatherService
+  let weatherServiceMock: jasmine.SpyObj<WeatherService>
+
+  let store: MockStore<{ search: { current: ICurrentWeather } }>
+  const initialState = { search: { current: defaultWeather } }
 
   beforeEach(async () => {
+    const weatherServiceSpy = autoSpyObj(
+      WeatherService,
+      ['currentWeather$'],
+      ObservablePropertyStrategy.BehaviorSubject
+    )
+
     await TestBed.configureTestingModule({
       declarations: [CurrentWeatherComponent],
-      imports: [MaterialModule, HttpClientTestingModule],
-      providers: [WeatherService],
+      imports: [MaterialModule],
+      providers: [
+        { provide: WeatherService, useValue: weatherServiceSpy },
+        provideMockStore({ initialState }),
+      ],
     }).compileComponents()
+
+    weatherServiceMock = injectSpy(WeatherService)
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    store = TestBed.inject(Store) as any
   })
 
   beforeEach(() => {
     fixture = TestBed.createComponent(CurrentWeatherComponent)
     component = fixture.componentInstance
-    weatherService = fixture.debugElement.injector.get(WeatherService)
   })
 
   it('should create', () => {
-    fixture.detectChanges()
+    // Act
+    weatherServiceMock.getCurrentWeather.and.returnValue(of())
+
+    // Act
+    fixture.detectChanges() // triggers ngOnInit
+
+    // Assert
     expect(component).toBeTruthy()
   })
 
-  it('should get currentWeather from weatherService', (done) => {
+  it('should get currentWeather from weatherService', async (done) => {
     // Arrange
-    weatherService.currentWeather$.next(fakeWeather)
+    store.setState({ search: { current: fakeWeather } })
+    weatherServiceMock.currentWeather$.next(fakeWeather)
 
     // Act
     fixture.detectChanges()

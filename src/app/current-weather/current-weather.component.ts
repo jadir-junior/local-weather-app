@@ -1,6 +1,10 @@
+import * as appStore from '../reducers'
+
+import { Observable, merge } from 'rxjs'
+
 import { Component } from '@angular/core'
 import { ICurrentWeather } from '../interfaces'
-import { Observable } from 'rxjs'
+import { Store } from '@ngrx/store'
 import { WeatherService } from '../weather/weather.service'
 
 @Component({
@@ -11,8 +15,15 @@ import { WeatherService } from '../weather/weather.service'
 export class CurrentWeatherComponent {
   current$: Observable<ICurrentWeather>
 
-  constructor(private weatherService: WeatherService) {
-    this.current$ = this.weatherService.currentWeather$
+  constructor(
+    private weatherService: WeatherService,
+    // eslint-disable-next-line ngrx/no-typed-global-store
+    private readonly store: Store<appStore.State>
+  ) {
+    this.current$ = merge(
+      this.store.select(appStore.selectCurrentWeather),
+      this.weatherService.currentWeather$
+    )
   }
 
   getOrdinal(date: number) {

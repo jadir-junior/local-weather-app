@@ -14,6 +14,7 @@
         "plugin:@angular-eslint/recommended",
         "plugin:@angular-eslint/recommended--extra",
         "plugin:@angular-eslint/template/process-inline-templates",
+        "plugin:ngrx/recommended",
         "plugin:prettier/recommended"
       ],
       "rules": {
