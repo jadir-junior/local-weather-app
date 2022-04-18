@@ -1,4 +1,5 @@
 import { CurrentWeatherEffects } from './current-weather.effects'
+import { HttpClientTestingModule } from '@angular/common/http/testing'
 import { Observable } from 'rxjs'
 import { TestBed } from '@angular/core/testing'
 import { provideMockActions } from '@ngrx/effects/testing'
@@ -10,6 +11,7 @@ describe('CurrentWeatherEffects', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       providers: [CurrentWeatherEffects, provideMockActions(() => actions$)],
+      imports: [HttpClientTestingModule],
     })
 
     effects = TestBed.inject(CurrentWeatherEffects)

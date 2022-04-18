@@ -12,6 +12,7 @@ import { FlexLayoutModule } from '@angular/flex-layout'
 import { HttpClientModule } from '@angular/common/http'
 import { MaterialModule } from './material.module'
 import { StoreModule } from '@ngrx/store'
+import { reducers } from './reducers'
 
 @NgModule({
   declarations: [AppComponent, CurrentWeatherComponent, CitySearchComponent],
@@ -23,7 +24,7 @@ import { StoreModule } from '@ngrx/store'
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot(reducers, {}),
     EffectsModule.forRoot([CurrentWeatherEffects]),
   ],
   providers: [],

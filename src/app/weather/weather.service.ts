@@ -28,6 +28,15 @@ export interface ICurrentWeatherData {
   name: string
 }
 
+export const defaultWeather: ICurrentWeather = {
+  city: '--',
+  country: '--',
+  date: Date.now(),
+  image: '',
+  temperature: 0,
+  description: '',
+}
+
 export interface IWeatherService {
   readonly currentWeather$: BehaviorSubject<ICurrentWeather>
   getCurrentWeather(search: string, country?: string): Observable<ICurrentWeather>
@@ -39,14 +48,7 @@ export interface IWeatherService {
   providedIn: 'root',
 })
 export class WeatherService implements IWeatherService {
-  readonly currentWeather$ = new BehaviorSubject<ICurrentWeather>({
-    city: '--',
-    country: '--',
-    date: Date.now(),
-    image: '',
-    temperature: 0,
-    description: '',
-  })
+  readonly currentWeather$ = new BehaviorSubject<ICurrentWeather>(defaultWeather)
 
   constructor(
     private httpClient: HttpClient,
