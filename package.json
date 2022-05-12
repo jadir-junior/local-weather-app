@@ -63,7 +63,7 @@
     "@angular/material": "^13.1.2",
     "@angular/platform-browser": "^13.1.2",
     "@angular/platform-browser-dynamic": "^13.1.2",
-    "@angular/router": "^13.1.2",
+    "@angular/router": "^13.3.7",
     "@ngrx/effects": "^13.1.0",
     "@ngrx/store": "^13.1.0",
     "rxjs": "~7.5.2",
